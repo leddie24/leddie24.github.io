@@ -449,6 +449,20 @@ ul.banner-social-buttons {
     ul.banner-social-buttons li:last-child {
         margin-bottom: 0;
     }
+
+    .project-contain {
+        max-height: 100%;
+    }
+}
+
+@media(max-width:535px) {
+    .portfolio-gallery {
+        display: block;
+    }
+
+    .project-contain {
+        display: block;
+    }
 }
 
 footer {
