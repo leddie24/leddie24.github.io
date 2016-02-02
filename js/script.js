@@ -86,15 +86,15 @@ $(document).ready(function() {
       }
    });
 
-
-
    $(document).on('click', '.page-scroll', function(e) {
       e.preventDefault();
       var anchor = $(this).attr('href');
       if (!home) {
-         loadHome(function(){
-            scrollTo($(anchor).offset().top);
-         });
+         $('#content').animate({opacity: 0}, function() {
+            loadHome(function(){
+               scrollTo($(anchor).offset().top);
+            });
+         }).delay(800).animate({opacity: 1});
          home = true;
       } else {
          scrollTo($(anchor).offset().top);
