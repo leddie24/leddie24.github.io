@@ -68,7 +68,7 @@ $(document).ready(function() {
          $('#content').animate({opacity: 0}, 500, function() {
             $(this).load('./views/discussion_board.html');
             $('.nav .active').removeClass('active');
-         }).animate({opacity: 1}, 500);
+         }).delay(800).animate({opacity: 1}, 500);
       });
    });
 
@@ -80,7 +80,7 @@ $(document).ready(function() {
       if (!home) {
          $('#content').animate({opacity: 0}, function() {
             loadHome(function(){});
-         }).delay(2000).animate({opacity: 1});
+         }).delay(800).animate({opacity: 1});
          home = true;
       }
    });
