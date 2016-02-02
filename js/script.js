@@ -15,7 +15,6 @@ $(document).ready(function() {
    }
 
    function scrollTo(position) {
-      console.log(position);
       $('body').animate({
          scrollTop: position
       }, 1000, function() {});
@@ -80,7 +79,7 @@ $(document).ready(function() {
       }, 300);
       if (!home) {
          $('#content').animate({opacity: 0}, function() {
-            loadHome();
+            loadHome(function(){});
          }).delay(2000).animate({opacity: 1});
          home = true;
       }
