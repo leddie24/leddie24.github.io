@@ -61,12 +61,13 @@ $(document).ready(function() {
 
    $(document).on('click', '.int-proj', function(e){
       e.preventDefault();
+      var link = $(this).attr('data-alt-proj');
       home = false;
       $('body').animate({
          scrollTop: $('#content').offset().top
       }, 800, function() {
          $('#content').animate({opacity: 0}, 500, function() {
-            $(this).load('./views/discussion_board.html');
+            $(this).load('./views/' + link);
             $('.nav .active').removeClass('active');
          }).delay(800).animate({opacity: 1}, 500);
       });
