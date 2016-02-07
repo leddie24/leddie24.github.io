@@ -135,6 +135,10 @@ a:focus {
     color: #fff;
 }
 
+body.noClass .navbar-custom .nav li.active a {
+    background: none;
+}
+
 @media(min-width:768px) {
     .navbar-custom {
         padding: 20px 0;

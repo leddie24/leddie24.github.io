@@ -60,6 +60,7 @@ $(document).ready(function() {
 
    $(document).on('click', '.int-proj', function(e){
       e.preventDefault();
+      $('body').addClass('noClass');
       if ($(this).parent('li')) {
          var keepactive = true;
          var parent = $(this).parent('li');
@@ -72,6 +73,7 @@ $(document).ready(function() {
       }, 800, function() {
          $('#content').animate({opacity: 0}, 500, function() {
             $(this).load('./views/' + link);
+            $('body').removeClass('noClass');
             $('.nav .active').removeClass('active'); 
             if (keepactive) {
                $(parent).addClass('active');
