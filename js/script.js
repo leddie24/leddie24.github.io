@@ -51,7 +51,6 @@ $(document).ready(function() {
 
    }
 
-
    $(document).on('click', '.modal-img', function(e) {
       e.preventDefault();
       $('#imagepreview').attr('src', $(this).children('img').attr('src')); // here asign the image to the modal when the user click the enlarge link
@@ -61,6 +60,11 @@ $(document).ready(function() {
 
    $(document).on('click', '.int-proj', function(e){
       e.preventDefault();
+      if ($(this).parent('li')) {
+         var keepactive = true;
+         var parent = $(this).parent('li');
+         $('.nav .active').removeClass('active');
+      }
       var link = $(this).attr('data-alt-proj');
       home = false;
       $('body').animate({
@@ -68,7 +72,10 @@ $(document).ready(function() {
       }, 800, function() {
          $('#content').animate({opacity: 0}, 500, function() {
             $(this).load('./views/' + link);
-            $('.nav .active').removeClass('active');
+            $('.nav .active').removeClass('active'); 
+            if (keepactive) {
+               $(parent).addClass('active');
+            }
          }).delay(800).animate({opacity: 1}, 500);
       });
    });
