@@ -1,0 +1,55 @@
+@import url(https://fonts.googleapis.com/css?family=Reenie+Beanie);
+
+.note {
+   display: block;
+   position: absolute;
+   width: 150px;
+   min-height: 150px;
+   text-decoration:none;
+   color:#000;
+   background:#ffc;
+   display:block;
+   padding: 0.5em;
+   font-size: 1.25em;
+   font-family: 'Reenie Beanie', cursive;
+   margin: 0.5em;
+   /* Firefox */
+   -moz-box-shadow:5px 5px 7px rgba(33,33,33,1);
+   /* Safari+Chrome */
+   -webkit-box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+   /* Opera */
+   box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+}
+
+.note:hover .actions {
+   display: block;
+}
+
+.actions {
+   position: absolute;
+   bottom: 4px;
+   right: 4px;
+   display: none;
+}
+
+.actions button {
+   margin-left: 0.3em;
+}
+
+.note .form-control {
+   height: 100%;
+    background: transparent;
+    border: 0px;
+    outline: 0px;
+    box-shadow: none;
+    padding: 0px;
+   font-size: 1em;
+}
+
+.note .text {
+   height: 100%;
+}
+
+.board {
+   position: relative;
+}
