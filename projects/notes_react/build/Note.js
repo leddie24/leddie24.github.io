@@ -5,13 +5,6 @@ var Note = React.createClass({displayName: "Note",
                editText: ''
             }
          },
-         componentWillMount: function() {
-            this.style = {
-               right: this.randomBetween(0, window.innerWidth - 200) + 'px',
-               top: this.randomBetween(0, window.innerHeight - 200) + 'px',
-               transform: 'rotate(' + this.randomBetween(-10, 10) + 'deg)'
-            }
-         },
          componentDidMount: function() {
             $(ReactDOM.findDOMNode(this)).draggable();
          },
@@ -42,7 +35,7 @@ var Note = React.createClass({displayName: "Note",
          renderDisplay: function() {
             return (
                React.createElement("div", {className: "note", 
-                     style: this.style}, 
+                     style: this.props.style}, 
                   React.createElement("div", {className: "text"}, this.props.children), 
                   React.createElement("div", {className: "actions"}, 
                      React.createElement("button", {onClick: this.edit.bind(null, this.props.children), 
@@ -55,7 +48,7 @@ var Note = React.createClass({displayName: "Note",
          renderForm: function() {
             return (
                React.createElement("div", {className: "note", 
-                     style: this.style}, 
+                     style: this.props.style}, 
                   React.createElement("textarea", {autoFocus: true, 
                            onFocus: this.fixCaret, 
                            onChange: this.updateTextState, 
