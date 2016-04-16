@@ -20,6 +20,14 @@
 </head>
 <body>
    <div>
+      <div>
+        <p>
+           <label>Number of Email Addreses</label>
+           <input type="number" name="numEmails" value="10000" />
+        </p>
+        <button id="generate">Generate Emails</button>
+      </div>
+      <hr />
       <label for="downloadType">Download Output:</label>
       <p>
          <input type="radio" name="downloadType" value="html" checked />
@@ -56,17 +64,19 @@
         this.className = '';
         e.preventDefault();
 
-        var startTime = new Date().getTime();
 
         var file = e.dataTransfer.files[0],
             reader = new FileReader();
         reader.readAsText(file);
+
         reader.onload = function (event) {
-          var text = reader.result;
-          var items = text.split("\n");
-          var nondupes = removeDuplicates(items);
-          var content = document.getElementById('output');
-          var downloadType = document.querySelector('input[name="downloadType"]:checked').value;
+          var startTime = new Date().getTime(),
+              text = reader.result,
+              items = text.split("\n"),
+              nondupes = removeDuplicates(items),
+              content = document.getElementById('output'),
+              downloadType = document.querySelector('input[name="downloadType"]:checked').value;
+          console.log(nondupes);
           if (downloadType == 'file') {
             nondupes = nondupes.join("\n");
             download('valid.txt', nondupes);
@@ -83,6 +93,29 @@
 
         return false;
       };
+
+      var generator = document.getElementById('generate');
+      generator.onclick = function() {
+        var numEmails = document.querySelector('input[name="numEmails"]').value,
+            downloadNums = [],
+            range = numEmails / 2,
+            number = null,
+            dlDupes = 0;
+        function randomNum(min, max) {
+            return Math.round(Math.random() * (max - min) + min);
+        }
+        for (var i = 0; i < numEmails; i++) {
+            number = randomNum(1, range);
+            if (downloadNums.indexOf(number + "@asdf.com") >= 0) {
+              dlDupes++;
+            }
+            downloadNums.push(number + "@asdf.com");
+        }
+        downloadNums = downloadNums.join("\n");
+        alert(dlDupes + " duplicates in the test file\n" + (numEmails - dlDupes) + " unique emails in this file");
+        console.log(dlDupes + " duplicates in the test file\n" + (numEmails - dlDupes) + " unique emails in this file");
+        download('testfile.txt', downloadNums);
+      }
 
       function download(filename, text) {
         var element = document.createElement('a');
@@ -102,9 +135,8 @@
       function removeDuplicates(list) {
         var exists = {},
             result = [],
-            curr = null,
-            i;
-        for (i = 0; i < list.length; i++) {
+            curr = null;
+        for (var i = 0; i < list.length; i++) {
             curr = list[i];
             if (typeof list[i] == "string") {
                curr = list[i].toLowerCase();
