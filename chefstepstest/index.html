@@ -15,6 +15,10 @@
       height: 100px;
       margin: 10px;
    }
+   #stats{
+    font-weight: 700;
+    margin: 5px 0;
+   }
    #holder.hover { border: 10px dashed #333; }
    </style>
 </head>
@@ -41,6 +45,8 @@
          Drag file here
      </div> 
      <p id="status">File API & FileReader API not supported</p>
+     <div id="stats">
+     </div>
       <div id="output">
 
       </div>
@@ -75,12 +81,15 @@
               items = text.split("\n"),
               nondupes = removeDuplicates(items),
               content = document.getElementById('output'),
+              file_stats = document.getElementById('stats'),
               downloadType = document.querySelector('input[name="downloadType"]:checked').value;
           console.log(nondupes);
+          file_stats.innerHTML = 'There are ' + nondupes.length + ' unique entries in this file';
           if (downloadType == 'file') {
             nondupes = nondupes.join("\n");
             download('valid.txt', nondupes);
           } else {
+            content.innerHTML = '';
              for (var i = 0; i < nondupes.length; i++) {
                var newDiv = document.createElement('div');
                newDiv.textContent = nondupes[i];
