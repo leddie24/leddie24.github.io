@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <title>valid email output</title>
+
+   <style>
+   #holder {
+      text-align: center;
+      line-height: 100px;
+      text-transform: uppercase;
+      font-weight: 700;
+      border: 5px dashed #ccc;
+      width: 200px;
+      height: 100px;
+      margin: 10px;
+   }
+   #holder.hover { border: 10px dashed #333; }
+   </style>
+</head>
+<body>
+   <div>
+      <label for="downloadType">Download Output:</label>
+      <p>
+         <input type="radio" name="downloadType" value="html" checked />
+         <label>HTML</label>
+      </p>
+      <p>
+         <input type="radio" name="downloadType" value="file" />
+         <label>File</label>
+      </p>
+     <div id="holder">
+         Drag file here
+     </div> 
+     <p id="status">File API & FileReader API not supported</p>
+      <div id="output">
+
+      </div>
+   </div>
+
+   <script>
+   (function() {
+      var holder = document.getElementById('holder'),
+          state = document.getElementById('status');
+
+          console.log(state);
+
+      if (typeof window.FileReader === 'undefined') {
+        state.className = 'fail';
+      } else {
+        state.className = 'success';
+        state.innerHTML = 'Drag and Drop a file to process';
+      }
+       
+      holder.ondragover = function () { this.className = 'hover'; return false; };
+      holder.ondragend = function () { this.className = ''; return false; };
+      holder.ondrop = function (e) {
+        this.className = '';
+        e.preventDefault();
+
+        var file = e.dataTransfer.files[0],
+            reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = function (event) {
+          var text = reader.result;
+          var items = text.split("\n");
+          var nondupes = removeDuplicates(items);
+          var content = document.getElementById('output');
+          var downloadType = document.querySelector('input[name="downloadType"]:checked').value;
+          if (downloadType == 'file') {
+            nondupes = nondupes.join("\n");
+            download('valid.txt', nondupes);
+          } else {
+             for (var i = 0; i < nondupes.length; i++) {
+               var newDiv = document.createElement('div');
+               newDiv.textContent = nondupes[i];
+               content.appendChild(newDiv);
+             }
+          }
+        };
+
+        return false;
+      };
+
+      function download(filename, text) {
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+
+        element.style.display = 'none';
+        document.body.appendChild(element);
+
+        element.click();
+
+        document.body.removeChild(element);
+      }
+
+      // Remove duplicates from the list.  Takes in an array of values (strings or integers) and
+      // returns an array of unique values in the order that they were processed
+      function removeDuplicates(list) {
+        var exists = {};
+        var result = [];
+        for (var i = 0; i < list.length; i++) {
+            var curr = list[i];
+            if (typeof list[i] == "string") {
+               curr = list[i].toLowerCase();
+            }
+            if (!exists[curr]) {
+               result.push(list[i]);
+               exists[curr] = true;
+            }
+        }
+        return result;
+      }
+   })();
+   </script>
+</body>
+</html>
