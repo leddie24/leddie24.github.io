@@ -43,8 +43,6 @@
       var holder = document.getElementById('holder'),
           state = document.getElementById('status');
 
-          console.log(state);
-
       if (typeof window.FileReader === 'undefined') {
         state.className = 'fail';
       } else {
@@ -57,6 +55,8 @@
       holder.ondrop = function (e) {
         this.className = '';
         e.preventDefault();
+
+        var startTime = new Date().getTime();
 
         var file = e.dataTransfer.files[0],
             reader = new FileReader();
@@ -77,6 +77,8 @@
                content.appendChild(newDiv);
              }
           }
+
+          console.log('TIME', new Date().getTime() - startTime);
         };
 
         return false;
@@ -98,10 +100,12 @@
       // Remove duplicates from the list.  Takes in an array of values (strings or integers) and
       // returns an array of unique values in the order that they were processed
       function removeDuplicates(list) {
-        var exists = {};
-        var result = [];
-        for (var i = 0; i < list.length; i++) {
-            var curr = list[i];
+        var exists = {},
+            result = [],
+            curr = null,
+            i;
+        for (i = 0; i < list.length; i++) {
+            curr = list[i];
             if (typeof list[i] == "string") {
                curr = list[i].toLowerCase();
             }
