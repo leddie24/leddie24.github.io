@@ -91,12 +91,12 @@ var GameInfo = React.createClass({
             React.createElement(
                "p",
                null,
-               "Each round you have 2 hints (which show all cards for 3 seconds), and 3 tries."
+               "Each round you have 2 hints, and 3 tries."
             ),
             React.createElement(
                "p",
                null,
-               "You have 30 seconds for round one, and 10 additional seconds for the subsequent levels."
+               "You have 20 seconds for round one, and 10 additional seconds for the subsequent levels."
             ),
             React.createElement(
                "p",
