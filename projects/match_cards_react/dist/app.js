@@ -1,7 +1,6 @@
 "use strict";
 
 var CARDCHECKTIME = 300;
-var TIMER;
 
 var NumberCard = React.createClass({
    displayName: "NumberCard",
@@ -114,6 +113,8 @@ var GameInfo = React.createClass({
    }
 });
 
+var TIMER;
+
 var GameBoard = React.createClass({
    displayName: "GameBoard",
 
@@ -135,12 +136,16 @@ var GameBoard = React.createClass({
    },
    componentDidUpdate: function componentDidUpdate() {
       if (this.state.timer <= 0) {
-         this.setState({
-            gameOver: true
-         }, function () {
-            clearInterval(TIMER);
-         });
+         this.endGame();
       }
+   },
+   endGame: function endGame() {
+      clearInterval(TIMER);
+      console.log(TIMER);
+      this.setState({
+         gameOver: true,
+         timer: this.getInitialState().timer
+      });
    },
    makeCards: function makeCards(num) {
       var cards = [];
@@ -148,28 +153,8 @@ var GameBoard = React.createClass({
          cards.push(i);
          cards.push(i);
       }
-      cards = this.shuffleCards(cards);
+      cards = this._shuffleCards(cards);
       return cards;
-   },
-   shuffleCards: function shuffleCards(array) {
-      var currentIndex = array.length,
-          temporaryValue,
-          randomIndex;
-
-      // While there remain elements to shuffle...
-      while (0 !== currentIndex) {
-
-         // Pick a remaining element...
-         randomIndex = Math.floor(Math.random() * currentIndex);
-         currentIndex -= 1;
-
-         // And swap it with the current element.
-         temporaryValue = array[currentIndex];
-         array[currentIndex] = array[randomIndex];
-         array[randomIndex] = temporaryValue;
-      }
-
-      return array;
    },
    startGame: function startGame() {
       var time = arguments.length <= 0 || arguments[0] === undefined ? this.state.level * 1500 : arguments[0];
@@ -377,6 +362,26 @@ var GameBoard = React.createClass({
          });
       }
    },
+   _shuffleCards: function _shuffleCards(array) {
+      var currentIndex = array.length,
+          temporaryValue,
+          randomIndex;
+
+      // While there remain elements to shuffle...
+      while (0 !== currentIndex) {
+
+         // Pick a remaining element...
+         randomIndex = Math.floor(Math.random() * currentIndex);
+         currentIndex -= 1;
+
+         // And swap it with the current element.
+         temporaryValue = array[currentIndex];
+         array[currentIndex] = array[randomIndex];
+         array[randomIndex] = temporaryValue;
+      }
+
+      return array;
+   },
    render: function render() {
       if (this.state.startGame) {
          if (this.state.gameOver) {
@@ -460,7 +465,7 @@ var PlayerControls = React.createClass({
    render: function render() {
       var disabled = this.props.hints === 0,
           hs = localStorage.getItem("matchCardsScore"),
-          highScore = !hs ? "No high score!" : hs;
+          highScore = !hs ? "1" : hs;
       return React.createElement(
          "div",
          null,
