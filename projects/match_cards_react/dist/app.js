@@ -165,6 +165,7 @@ var GameBoard = React.createClass({
          startGame: true,
          gameOver: false,
          level: level,
+         hints: initial.hints,
          guessesLeft: initial.guessesLeft,
          timer: gameTime
       }, function () {
