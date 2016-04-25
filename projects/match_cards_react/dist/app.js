@@ -126,7 +126,7 @@ var GameBoard = React.createClass({
          startGame: false,
          gameOver: false,
          hints: 2,
-         timer: 30,
+         timer: 20,
          guessesLeft: 3,
          cancels: 1,
          cards: cards,
@@ -141,7 +141,6 @@ var GameBoard = React.createClass({
    },
    endGame: function endGame() {
       clearInterval(TIMER);
-      console.log(TIMER);
       this.setState({
          gameOver: true,
          timer: this.getInitialState().timer
@@ -217,7 +216,6 @@ var GameBoard = React.createClass({
    startTimer: function startTimer() {
       TIMER = setInterval(function () {
          var gameTime = this.state.timer - 1;
-         console.log('timer running', gameTime);
          this.setState({
             timer: gameTime
          });
@@ -313,7 +311,6 @@ var GameBoard = React.createClass({
                       hs = localStorage.getItem("matchCardsScore"),
                       cards = this.makeCards(pairs),
                       gameTime = this.getInitialState().timer + (level - 1) * 10;
-                  console.log(gameTime);
                   if (level > hs) {
                      localStorage.setItem("matchCardsScore", level);
                   }
@@ -334,7 +331,7 @@ var GameBoard = React.createClass({
                         currCards[i].classList.remove("flipped");
                         currCards[i].classList.remove("valid");
                      }
-                     this.startGame(1500);
+                     this.startGame();
                   });
                }.bind(that), 1000);
             });
